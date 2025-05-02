@@ -1,3 +1,3 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","16607","DemoQA Login Test - Valid and Invalid Credentials","demoqa-tests","Fri May 02 20:16:42 IST 2025","passed","Fri May 02 20:16:59 IST 2025","","tests\demoqa-login.spec.js","",""
+"","19916","DemoQA Login Test - Valid and Invalid Credentials","demoqa-tests","Fri May 02 20:22:33 IST 2025","passed","Fri May 02 20:22:53 IST 2025","","tests\demoqa-login.spec.js","",""
 "","9032","DemoQA Login Test","demoqa-tests","Fri May 02 10:48:59 IST 2025","passed","Fri May 02 10:49:08 IST 2025","","tests\demoqa-login.spec.js","",""

@@ -12,7 +12,17 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    sh 'npm install'
+                    echo 'Installing npm dependencies...'
+                    sh 'npm ci'  // Installs dependencies based on the package-lock.json
+                }
+            }
+        }
+
+        stage('Install Playwright') {
+            steps {
+                script {
+                    echo 'Installing Playwright...'
+                    sh 'npx playwright install'  // Installs Playwright browser binaries
                 }
             }
         }
@@ -20,9 +30,8 @@ pipeline {
         stage('Run Playwright Tests') {
             steps {
                 script {
-                    // Run Playwright tests with Allure reporter
                     echo 'Running Playwright tests...'
-                    sh 'npx playwright test --reporter=allure-playwright --output=playwright-report'
+                    sh 'npx playwright test'  // Runs Playwright tests
                 }
             }
         }
@@ -30,10 +39,10 @@ pipeline {
         stage('Publish Test Report') {
             steps {
                 script {
-                    // Publish the Allure report to Jenkins
+                    // You can optionally publish your results here (if using a reporter like Allure)
+                    echo 'Publishing Test Report...'
                     allure([
                         includeProperties: false,
-                        jdk: '',
                         results: [[path: 'playwright-report/allure-results']]
                     ])
                 }
@@ -43,15 +52,12 @@ pipeline {
 
     post {
         always {
-            // Clean up workspace or perform other post-test actions
-            cleanWs()
+            cleanWs()  // Clean workspace after job
         }
         success {
-            // Send success notifications or additional steps
             echo 'Tests passed!'
         }
         failure {
-            // Send failure notifications or additional steps
             echo 'Tests failed!'
         }
     }
