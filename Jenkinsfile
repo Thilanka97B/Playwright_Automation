@@ -20,8 +20,8 @@ pipeline {
         stage('Run Playwright Tests') {
             steps {
                 script {
-                    // Run Playwright tests and generate the report
-                    sh 'npx playwright test --reporter=html'
+                    // Run Playwright tests and generate JUnit-style XML report
+                    sh 'npx playwright test --reporter=junit --output=playwright-report'
                 }
             }
         }
