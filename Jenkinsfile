@@ -20,8 +20,9 @@ pipeline {
         stage('Run Playwright Tests') {
             steps {
                 script {
-                    // Run Playwright tests and generate JUnit-style XML report
-                    sh 'npx playwright test --reporter=junit --output=playwright-report'
+                    // Run Playwright tests with Allure reporter
+                    echo 'Running Playwright tests...'
+                    sh 'npx playwright test --reporter=allure-playwright --output=playwright-report'
                 }
             }
         }
@@ -29,8 +30,12 @@ pipeline {
         stage('Publish Test Report') {
             steps {
                 script {
-                    // Publish the test report to Jenkins
-                    junit '**/playwright-report/**/*.xml'
+                    // Publish the Allure report to Jenkins
+                    allure([
+                        includeProperties: false,
+                        jdk: '',
+                        results: [[path: 'playwright-report/allure-results']]
+                    ])
                 }
             }
         }
