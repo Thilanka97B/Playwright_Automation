@@ -20,9 +20,34 @@ pipeline {
         stage('Run Playwright Tests') {
             steps {
                 script {
-                    sh 'npx playwright test'
+                    // Run Playwright tests and generate the report
+                    sh 'npx playwright test --reporter=html'
                 }
             }
+        }
+
+        stage('Publish Test Report') {
+            steps {
+                script {
+                    // Publish the test report to Jenkins
+                    junit '**/playwright-report/**/*.xml'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up workspace or perform other post-test actions
+            cleanWs()
+        }
+        success {
+            // Send success notifications or additional steps
+            echo 'Tests passed!'
+        }
+        failure {
+            // Send failure notifications or additional steps
+            echo 'Tests failed!'
         }
     }
 }
